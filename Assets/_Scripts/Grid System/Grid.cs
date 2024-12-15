@@ -21,11 +21,12 @@ namespace Blast
             m_originPosition = originPosition;
             m_cellArray = new Cell[levelSo._gridWidth, levelSo._gridHeight];
 
-            for (int x = 0; x < m_cellArray.GetLength(0); x++) 
+            for (int y = 0; y < m_cellArray.GetLength(0); y++) 
             {
-                for (int y = 0; y < m_cellArray.GetLength(1); y++)
+                for (int x = 0; x < m_cellArray.GetLength(1); x++)
                 {
-                    var cell = Instantiate(_cell, GetWorldPositionFromGridPosition(x, y), Quaternion.identity);
+                    var cell = Instantiate(_cell, GetWorldPositionFromGridPosition(x, y), Quaternion.identity, transform);
+                    cell.gameObject.name = $"x: {x} y: {y}";
                     m_cellArray[x, y] = cell;
                 }
             }
