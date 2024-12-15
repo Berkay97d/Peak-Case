@@ -7,6 +7,8 @@ public class CameraFit : MonoBehaviour
     [SerializeField] private Grid _grid;
     [SerializeField] private float _maxFillX;
     [SerializeField] private float _maxFillY;
+
+    public event Action OnCameraSizeChange;
     
     private Camera m_camera;
 
@@ -24,26 +26,22 @@ public class CameraFit : MonoBehaviour
 
     private void OnGridInit(int gridWidth, int gridHeight)
     {
-        AdjustCameraSize(gridWidth, gridWidth);
+        AdjustCameraSize(gridWidth, gridHeight);
+        OnCameraSizeChange?.Invoke();
     }
 
     void AdjustCameraSize(int gridWidth, int gridHeight)
     {
-        float gridWorldWidth = gridWidth * _grid.GetCellSize().x;
-        float gridWorldHeight = gridHeight * _grid.GetCellSize().y;
+        var gridWorldWidth = gridWidth * _grid.GetCellSize().x;  
+        var gridWorldHeight = gridHeight * _grid.GetCellSize().y; 
+
+        var screenAspect = (float)Screen.width / Screen.height; 
         
-        float gridAspect = gridWorldWidth / gridWorldHeight;
-
-        // Screen aspect ratio
-        float screenAspect = (float)Screen.width / Screen.height;
-
-        if (gridAspect > screenAspect) // Grid is wider than the screen
-        {
-            m_camera.orthographicSize = (gridWorldWidth / 2) / (screenAspect * _maxFillX);
-        }
-        else // Grid is taller than or matches the screen
-        {
-            m_camera.orthographicSize = (gridWorldHeight / 2) / _maxFillY;
-        }
+        var requiredSizeX = gridWorldWidth / 2 / _maxFillX; 
+        var requiredSizeY = gridWorldHeight / 2;         
+        
+        requiredSizeY /= _maxFillY;
+        
+        m_camera.orthographicSize = Mathf.Max(requiredSizeX / screenAspect, requiredSizeY);
     }
 }

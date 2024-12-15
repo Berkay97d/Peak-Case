@@ -14,9 +14,6 @@ namespace Blast
            _grid.SetupGrid(_levels[0], Vector3.zero);
         }
 
-        private void CalculateCenteredOrigin()
-        {
-            
-        }
+        
     }
 }

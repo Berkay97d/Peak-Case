@@ -1,19 +1,33 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BackgroundSize : MonoBehaviour
 {
+    [SerializeField] private CameraFit _cameraFit;
+    
     private Camera mainCamera;
     private SpriteRenderer spriteRenderer;
 
-    private void Start()
+    private void Awake()
     {
         mainCamera = Camera.main;
         spriteRenderer = GetComponent<SpriteRenderer>();
+        
+        _cameraFit.OnCameraSizeChange += OnCameraSizeChange;
+    }
+
+    private void OnDestroy()
+    {
+        _cameraFit.OnCameraSizeChange -= OnCameraSizeChange;
+    }
+
+    private void OnCameraSizeChange()
+    {
         Fit();
     }
-    
+
     private void Fit()
     {
         var camHeight = 2f * mainCamera.orthographicSize;

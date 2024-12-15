@@ -322,8 +322,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _grid: {fileID: 1462916939}
-  _maxFillX: 0.5
-  _maxFillY: 0.5
+  _maxFillX: 0.9
+  _maxFillY: 0.65
 --- !u!1 &613707553
 GameObject:
   m_ObjectHideFlags: 0
@@ -489,6 +489,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3282ae06cafcd944587bf3271485b2e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cameraFit: {fileID: 519420033}
 --- !u!1 &1462916938
 GameObject:
   m_ObjectHideFlags: 0
