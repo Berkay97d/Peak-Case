@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Blast
 {
-    public class Piece : MonoBehaviour
+    public abstract class Piece : MonoBehaviour
     {
         public event Action OnPieceDestroy;
         
