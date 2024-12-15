@@ -1,11 +1,14 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Blast
 {
     public class Grid : MonoBehaviour
     {
         [SerializeField] private Cell _cell;
+
+        public event Action<int, int> OnGridInit;
         
         private const float CELLSIZEX = 1.00f;
         private const float CELLSIZEY = 1.20f;
@@ -21,15 +24,17 @@ namespace Blast
             m_originPosition = originPosition;
             m_cellArray = new Cell[levelSo._gridWidth, levelSo._gridHeight];
 
-            for (int y = 0; y < m_cellArray.GetLength(0); y++) 
+            for (int y = 0; y < m_cellArray.GetLength(1); y++) 
             {
-                for (int x = 0; x < m_cellArray.GetLength(1); x++)
+                for (int x = 0; x < m_cellArray.GetLength(0); x++)
                 {
                     var cell = Instantiate(_cell, GetWorldPositionFromGridPosition(x, y), Quaternion.identity, transform);
                     cell.gameObject.name = $"x: {x} y: {y}";
                     m_cellArray[x, y] = cell;
                 }
             }
+            
+            OnGridInit?.Invoke(levelSo._gridWidth, levelSo._gridHeight);
         }
 
         public int GetWidth() 
@@ -49,7 +54,7 @@ namespace Blast
 
         public Vector3 GetWorldPositionFromGridPosition(int x, int y)
         {
-            return new Vector3(x * CELLSIZEX, y * CELLSIZEY) + m_originPosition;
+            return new Vector3(x * CELLSIZEX + CELLSIZEX/2, y * CELLSIZEY + CELLSIZEX/2) + m_originPosition;
         }
 
         public GridPosition GetGridPositionFromWorldPosition(Vector3 worldPosition, Grid grid)
@@ -89,12 +94,14 @@ namespace Blast
             return default;
         }
 
-        public Cell GetBlastCellFromWorldPosition(Vector3 worldPosition) 
+        public Cell GetCellFromWorldPosition(Vector3 worldPosition) 
         {
             int x, y;
             GetXY(worldPosition, out x, out y);
             return GetBlastCellFromGridPosition(x, y);
         }
+
+        
 
     }
 
