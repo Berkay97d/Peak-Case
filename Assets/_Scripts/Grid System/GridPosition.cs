@@ -2,29 +2,29 @@
 {
     public struct GridPosition
     {
-        private int x;
-        private int y;
-        private Grid grid;
+        private int m_x;
+        private int m_y;
+        private Grid m_grid;
         
         
         public GridPosition(Grid grid, int x, int y)
         {
-            this.grid = grid;
-            this.x = x;
-            this.y = y;
+            m_grid = grid;
+            m_x = x;
+            m_y = y;
         }
         
         public int GetX() {
-            return x;
+            return m_x;
         }
 
         public int GetY() {
-            return y;
+            return m_y;
         }
         
         public override string ToString()
         {
-            return "x: " + x + " y: " + y;
+            return $"x: {m_x} y: {m_y}";
         }
     }
 }
