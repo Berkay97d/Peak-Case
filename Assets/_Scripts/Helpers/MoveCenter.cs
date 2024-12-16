@@ -21,6 +21,7 @@ public class MoveCenter : MonoBehaviour
 
     private void OnGridInit(int x, int y)
     {
-        transform.position = new Vector3(x * -grid.GetCellSize().x/2, y * -grid.GetCellSize().y/2 + 0.1f, 0);
+        transform.position = new Vector3(x * -grid.GetCellSize().x/2, y * -grid.GetCellSize().y/2 - 0.5f, 0);
+        
     }
 }

@@ -11,7 +11,7 @@ namespace Blast
         public event Action<int, int> OnGridInit;
         
         private const float CELLSIZEX = 1.00f;
-        private const float CELLSIZEY = 1.20f;
+        private const float CELLSIZEY = 1.00f;
 
         private LevelSO m_levelSO;
         private Vector3 m_originPosition;
