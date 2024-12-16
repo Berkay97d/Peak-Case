@@ -84,6 +84,11 @@ namespace Blast
             SetGridObject(x, y, cell);
         }
 
+        public Vector3 GetGridCenter()
+        {
+            return new Vector3(m_levelSO._gridWidth * CELLSIZEX / 2, m_levelSO._gridHeight * CELLSIZEY / 2, 0);
+        }
+
         public Cell GetBlastCellFromGridPosition(int x, int y) 
         {
             if (x >= 0 && y >= 0 && x < m_levelSO._gridWidth && y < m_levelSO._gridHeight) 
