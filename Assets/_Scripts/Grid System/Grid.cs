@@ -18,7 +18,7 @@ namespace Blast
         private Cell[,] m_cellArray;
         
 
-        public void SetupGrid(LevelSO levelSo, Vector3 originPosition)
+        public Cell[,] SetupGrid(LevelSO levelSo, Vector3 originPosition)
         {
             m_levelSO = levelSo;
             m_originPosition = originPosition;
@@ -35,6 +35,7 @@ namespace Blast
             }
             
             OnGridInit?.Invoke(levelSo._gridWidth, levelSo._gridHeight);
+            return m_cellArray;
         }
 
         public int GetWidth() 

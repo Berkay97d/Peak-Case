@@ -1,6 +1,8 @@
-﻿namespace Blast
+﻿using UnityEngine;
+
+namespace Blast
 {
-    public class PieceVisual
+    public class PieceVisual: MonoBehaviour
     {
         
     }

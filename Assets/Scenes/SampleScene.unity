@@ -942,6 +942,12 @@ MonoBehaviour:
   _grid: {fileID: 1462916939}
   _levels:
   - {fileID: 11400000, guid: b6bc08a6cb2678b4b9bc2f41c2493c24, type: 2}
+  _allPieces:
+  - {fileID: 2408571603246145176, guid: cffdbbb3c42e0944cb7dab1d6050eade, type: 3}
+  - {fileID: 3643587295805128667, guid: 40e1f22a5829a8d4f91b1d17be990dc1, type: 3}
+  - {fileID: 4528998457764532070, guid: 93fed588761b2c2418b6679451f7e58a, type: 3}
+  - {fileID: 8981426724091415675, guid: b9b220f69fe8bea4d8753c8bea36785b, type: 3}
+  - {fileID: 1023512003775429881, guid: 5fe93624733bbbc429fcb589942d86f7, type: 3}
 --- !u!4 &1573416817
 Transform:
   m_ObjectHideFlags: 0
