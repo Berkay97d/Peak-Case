@@ -18,7 +18,7 @@ namespace Blast
         private Cell[,] m_cellArray;
         
 
-        public Cell[,] SetupGrid(LevelSO levelSo, Vector3 originPosition)
+        public Cell[,] SetupGrid(LevelSO levelSo, Vector3 originPosition, Grid grid)
         {
             m_levelSO = levelSo;
             m_originPosition = originPosition;
@@ -29,6 +29,7 @@ namespace Blast
                 for (int x = 0; x < m_cellArray.GetLength(0); x++)
                 {
                     var cell = Instantiate(_cell, GetWorldPositionFromGridPosition(x, y), Quaternion.identity, transform);
+                    cell.SetGridPosition(new GridPosition(grid, x,y));
                     cell.gameObject.name = $"x: {x} y: {y}";
                     m_cellArray[x, y] = cell;
                 }

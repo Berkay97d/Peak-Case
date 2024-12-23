@@ -15,7 +15,7 @@ namespace Blast
         
         private void Start()
         {
-           m_gridCells = _grid.SetupGrid(_levels[0], Vector3.zero);
+           m_gridCells = _grid.SetupGrid(_levels[0], Vector3.zero, _grid);
 
            for (int x = 0; x < m_gridCells.GetLength(0); x++)
            {
