@@ -21,6 +21,11 @@
         public int GetY() {
             return m_y;
         }
+
+        public Grid GetGrid()
+        {
+            return m_grid;
+        }
         
         public override string ToString()
         {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -91,22 +92,31 @@ namespace Blast
             return new Vector3(m_levelSO._gridWidth * CELLSIZEX / 2, m_levelSO._gridHeight * CELLSIZEY / 2, 0);
         }
 
-        public Cell GetBlastCellFromGridPosition(int x, int y) 
+        public Cell GetBlastCellFromGridPosition(GridPosition gridPosition) 
         {
-            if (x >= 0 && y >= 0 && x < m_levelSO._gridWidth && y < m_levelSO._gridHeight) 
+            if (gridPosition.GetX() >= 0 && gridPosition.GetY() >= 0 && gridPosition.GetX() < m_levelSO._gridWidth && gridPosition.GetY() < m_levelSO._gridHeight) 
             {
-                return m_cellArray[x, y];
+                return m_cellArray[gridPosition.GetX(), gridPosition.GetY()];
             } 
             
             return default;
         }
-
-        public Cell GetCellFromWorldPosition(Vector3 worldPosition) 
+        
+        public List<Cell> GetBlastCellsFromGridPositions(List<GridPosition> gridPositions)
         {
-            int x, y;
-            GetXY(worldPosition, out x, out y);
-            return GetBlastCellFromGridPosition(x, y);
+            List<Cell> cells = new List<Cell>();
+
+            foreach (var gridPosition in gridPositions)
+            {
+                if (gridPosition.GetX() >= 0 && gridPosition.GetY() >= 0 && gridPosition.GetX() < m_levelSO._gridWidth && gridPosition.GetY() < m_levelSO._gridHeight)
+                {
+                    cells.Add(m_cellArray[gridPosition.GetX(), gridPosition.GetY()]);
+                }
+            }
+
+            return cells;
         }
+        
 
         
 
