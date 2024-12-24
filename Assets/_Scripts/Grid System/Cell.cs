@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Scripts;
 using UnityEngine;
 
 namespace Blast
@@ -12,12 +13,21 @@ namespace Blast
 
         private void Awake()
         {
-            
+            MatchController.OnMatch += OnMatch;
         }
-
+        
         private void OnDestroy()
         {
-            
+            MatchController.OnMatch -= OnMatch;
+        }
+        
+        private void OnMatch(MatchType matchType, List<Cell> matchedCells)
+        {
+            if (matchedCells.Contains(this))
+            {
+                m_myPiece.DestroyInstant();
+                m_myPiece = null;
+            }
         }
 
         public void SetPiece(Piece piece)

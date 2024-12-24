@@ -63,7 +63,8 @@ namespace Blast
         
         public void DestroyInstant() 
         {
-            OnPieceDestroy?.Invoke();
+            Destroy(gameObject);
+            //OnPieceDestroy?.Invoke();
         }
 
         public void DestroyTowardsTarget(Vector3 target)
