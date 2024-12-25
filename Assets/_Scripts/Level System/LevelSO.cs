@@ -21,5 +21,15 @@ namespace Blast
         {
             return Resources.Load<GameObject>("Empty Prefab");
         }
+        
+        public void AddRowAtIndex(PieceRow pieceRow, int index)
+        {
+            _startBoard.Insert(index, pieceRow);
+        }
+
+        public void RemoveRowAtIndex(int index)
+        {
+            _startBoard.RemoveAt(index);
+        }
     }
 }

@@ -21,7 +21,7 @@ namespace Blast
            {
                for (int y = 0; y < m_gridCells.GetLength(1); y++)
                {
-                   var pieceToSpawn = GetRandomPiece();
+                   var pieceToSpawn = _levels[0]._startBoard[m_gridCells.GetLength(1) - 1 - y][x];
                    var pieceInstance = Instantiate(pieceToSpawn);
                    pieceInstance.SetCell(m_gridCells[x,y], true);
                }

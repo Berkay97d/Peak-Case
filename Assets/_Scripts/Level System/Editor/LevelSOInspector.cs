@@ -32,6 +32,7 @@ namespace Blast.Editor
 
             DrawColumnOperationButtons(levelSO._gridWidth);
             DrawLevelMatrix(levelSO._startBoard);
+            EditorGUILayout.LabelField("PREFABS");
             DrawPiecePreviewRow(piecePrefabs, piece => piece == m_selectedPiece
                 ? Color.gray
                 : GUI.color,(piece,_) =>
@@ -117,16 +118,19 @@ namespace Blast.Editor
             GUILayout.BeginVertical();
             if (GUILayout.Button("+", GUILayout.Height(elementSize), GUILayout.Width(40)))
             {
+                m_levelSo.AddRowAtIndex(new PieceRow(m_levelSo._gridWidth), index);
                 Debug.Log($"YUKARI ekle {index}");
             }
             GUI.color = Color.red;
             if (GUILayout.Button("-", GUILayout.Height(elementSize), GUILayout.Width(40)))
             {
+                m_levelSo.RemoveRowAtIndex(index);
                 Debug.Log($"SATIR SİL {index}");
             }
             GUI.color = Color.green;
             if (GUILayout.Button("+", GUILayout.Height(elementSize), GUILayout.Width(40)))
             {
+                m_levelSo.AddRowAtIndex(new PieceRow(m_levelSo._gridWidth), index+1);
                 Debug.Log($"AŞAĞI ekle {index}");
             }
 
