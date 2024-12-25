@@ -9,7 +9,7 @@ namespace _Scripts
     public class Fall : MonoBehaviour
     {
         [SerializeField] private Piece _myPiece;
-
+        
 
         private void Awake()
         {
