@@ -36,8 +36,16 @@ namespace _Scripts
             {
                 return;
             }
+
+            if (!IsAnyUnfallableUnder())
+            {
+                Debug.Log("ALTIMDA UF YOK");
+                DoFall(matchCountUnderMe);
+                return;
+            }
             
-            DoFall(matchCountUnderMe);
+            Debug.Log("ALTIMDA UF VAR");
+            DoFall(GetDistanceToNearestUnfallablePieceBelow());
         }
 
         private int GetMyColumnMatchCount(List<Cell> matchCells)
@@ -69,6 +77,54 @@ namespace _Scripts
             }
             
             return count;
+        }
+
+        private int GetDistanceToNearestUnfallablePieceBelow()
+        {
+            var distance = -1;
+            
+            var grid = _myPiece.GetCell().GetGridPosition().GetGrid();
+            var underCells = grid.GetBlastCellsFromGridPositions(_myPiece.GetCell().GetAllUnderGridPositions());
+            
+            for (int i = 0; i < underCells.Count; i++)
+            {
+                if(underCells[i].GetPiece() == null)
+                {
+                    continue;
+                }
+                
+                if(underCells[i].GetPiece().TryGetComponent(out Fall fall))
+                {
+                    distance++;
+                }
+                
+                break;
+            }
+
+            return distance;
+        }
+
+        private bool IsAnyUnfallableUnder()
+        {
+            var grid = _myPiece.GetCell().GetGridPosition().GetGrid();
+            var underCells = grid.GetBlastCellsFromGridPositions(_myPiece.GetCell().GetAllUnderGridPositions());
+
+            var isAnyUnfallableUnder = false;
+
+            foreach (var underCell in underCells)
+            {
+                if (underCell.GetPiece() == null)
+                {
+                    continue;
+                }
+                
+                if (!underCell.GetPiece().TryGetComponent(out Fall fall))
+                {
+                    isAnyUnfallableUnder = true;
+                }
+            }
+
+            return isAnyUnfallableUnder;
         }
 
         private void DoFall(int fallAmount)

@@ -81,5 +81,22 @@ namespace Blast
             
             return neighbourGridPositions;
         }
+
+        public List<GridPosition> GetAllUnderGridPositions()
+        {
+            var myGrid = m_gridPosition.GetGrid();
+            var underGridPositions = new List<GridPosition>();
+            
+            for (int i = m_gridPosition.GetX()-1; i >= 0; i--)
+            {
+                var gridPos = new GridPosition(myGrid, i, m_gridPosition.GetY());
+                underGridPositions.Add(gridPos);
+            }
+
+            return underGridPositions;
+        }
+        
+
+        
     }
 }
