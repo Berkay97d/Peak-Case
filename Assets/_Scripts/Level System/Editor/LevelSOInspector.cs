@@ -29,10 +29,17 @@ namespace Blast.Editor
                     levelSO._startBoard.Add(new PieceRow(5)); 
                 }    
             }
+            
+            GUIStyle boldCenteredStyle = new GUIStyle(GUI.skin.label)
+            {
+                alignment = TextAnchor.MiddleCenter,
+                fontStyle = FontStyle.Bold
+            };
 
+            EditorGUILayout.LabelField($"LEVEL MATRIX: {levelSO._gridHeight}x{levelSO._gridWidth}", boldCenteredStyle);
             DrawColumnOperationButtons(levelSO._gridWidth);
             DrawLevelMatrix(levelSO._startBoard);
-            EditorGUILayout.LabelField("PREFABS");
+            EditorGUILayout.LabelField("PREFABS", boldCenteredStyle);
             DrawPiecePreviewRow(piecePrefabs, piece => piece == m_selectedPiece
                 ? Color.gray
                 : GUI.color,(piece,_) =>
