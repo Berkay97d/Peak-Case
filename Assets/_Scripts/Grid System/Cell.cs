@@ -87,9 +87,9 @@ namespace Blast
             var myGrid = m_gridPosition.GetGrid();
             var underGridPositions = new List<GridPosition>();
             
-            for (int i = m_gridPosition.GetX()-1; i >= 0; i--)
+            for (int i = m_gridPosition.GetY()-1; i >= 0; i--)
             {
-                var gridPos = new GridPosition(myGrid, i, m_gridPosition.GetY());
+                var gridPos = new GridPosition(myGrid,  m_gridPosition.GetX(), i);
                 underGridPositions.Add(gridPos);
             }
 

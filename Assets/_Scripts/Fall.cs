@@ -81,7 +81,7 @@ namespace _Scripts
 
         private int GetDistanceToNearestUnfallablePieceBelow()
         {
-            var distance = -1;
+            var distance = 0;
             
             var grid = _myPiece.GetCell().GetGridPosition().GetGrid();
             var underCells = grid.GetBlastCellsFromGridPositions(_myPiece.GetCell().GetAllUnderGridPositions());
@@ -90,15 +90,14 @@ namespace _Scripts
             {
                 if(underCells[i].GetPiece() == null)
                 {
+                    distance++;
                     continue;
                 }
                 
-                if(underCells[i].GetPiece().TryGetComponent(out Fall fall))
+                if(!underCells[i].GetPiece().TryGetComponent(out Fall fall))
                 {
-                    distance++;
+                    break;
                 }
-                
-                break;
             }
 
             return distance;
