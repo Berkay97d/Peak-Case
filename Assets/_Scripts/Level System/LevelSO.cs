@@ -8,6 +8,17 @@ namespace Blast
         public int _gridWidth;
         public int _gridHeight;
         public string _goal;
-        public int[,] _startBoard;
+        public Piece[][] _startBoard;
+
+        
+        public static Piece[] GetPiecePrefabs()
+        {
+            return Resources.LoadAll<Piece>("");
+        }
+
+        public static GameObject GetEmptyPrefab()
+        {
+            return Resources.Load<GameObject>("Empty Prefab");
+        }
     }
 }
