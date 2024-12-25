@@ -129,6 +129,11 @@ namespace _Scripts
         private void DoFall(int fallAmount)
         {
             gameObject.GetComponentInChildren<TMP_Text>().text = fallAmount.ToString();
+            var gridPosition = _myPiece.GetCell().GetGridPosition();
+            var fallPosition = new GridPosition(gridPosition.GetGrid(), gridPosition.GetX(),
+                gridPosition.GetY() - fallAmount);
+            
+            _myPiece.SetCell(_myPiece.GetCell().GetGridPosition().GetGrid().GetBlastCellFromGridPosition(fallPosition), false);
         }
     }
 }

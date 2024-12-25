@@ -55,6 +55,12 @@ namespace Blast
             transform.localPosition = Vector3.zero;
         }
         
+        private void ChangePositionByFall(Transform parent)
+        {
+            transform.SetParent(parent.transform);
+            transform.DOLocalMove(Vector3.zero, 5f).SetSpeedBased();
+        }
+        
         public void OnPointerDown(PointerEventData eventData)
         {
             Debug.Log($"{m_myCell.GetGridPosition().GetX()} , {m_myCell.GetGridPosition().GetY()}");
@@ -72,11 +78,19 @@ namespace Blast
             
         }
         
-        public void SetCell(Cell cell)
+        public void SetCell(Cell cell, bool isInit)
         {
             m_myCell = cell;
+
+            if (isInit)
+            {
+                ChangePositionInstant(cell.transform);    
+            }
+            else
+            {
+                ChangePositionByFall(cell.transform);
+            }
             
-            ChangePositionInstant(cell.transform);
             cell.SetPiece(this);
             
             OnCellChange?.Invoke(cell);
