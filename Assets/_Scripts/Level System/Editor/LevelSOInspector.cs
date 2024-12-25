@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -8,23 +9,24 @@ namespace Blast.Editor
     public class LevelSOInspector : UnityEditor.Editor
     {
         private Piece m_selectedPiece;
+        private LevelSO m_levelSo;
+        
         
         public override void OnInspectorGUI()
         {
             LevelSO levelSO = (LevelSO) target;
-            var piecePrefabs = LevelSO.GetPiecePrefabs();
+            var piecePrefabs = new PieceRow(LevelSO.GetPiecePrefabs());
             
             Undo.RecordObject(levelSO, "changeLevelSO");
-            
-            levelSO._gridWidth = EditorGUILayout.IntField("Width", levelSO._gridWidth);
-            levelSO._gridHeight = EditorGUILayout.IntField("Height", levelSO._gridHeight);
 
-            if (levelSO._startBoard == null || levelSO._startBoard.Length <= 0 )
+            m_levelSo = levelSO;
+
+            if (levelSO._startBoard == null || levelSO._startBoard.Count <= 0 )
             {
-                levelSO._startBoard = new Piece[levelSO._gridHeight][];
-                for (int i = 0; i < levelSO._startBoard.Length; i++)
+                levelSO._startBoard = new List<PieceRow>();
+                for (int i = 0; i < 5; i++)
                 {
-                    levelSO._startBoard[i] = new Piece[levelSO._gridWidth];
+                    levelSO._startBoard.Add(new PieceRow(5)); 
                 }    
             }
 
@@ -36,9 +38,10 @@ namespace Blast.Editor
             {
                 m_selectedPiece = piece;
             });
+            
         }
 
-        private void DrawPiecePreviewRow(Piece[] pieces,Func<Piece, Color> colorFunc, Action<Piece, int> onClick, Action preDrawCallback = null, Action postDrawCallback = null)
+        private void DrawPiecePreviewRow(PieceRow pieces,Func<Piece, Color> colorFunc, Action<Piece, int> onClick, Action preDrawCallback = null, Action postDrawCallback = null)
         {
             var maxPrefabSize = GetElementSize(pieces.Length);
             var paddingLeft = GetPaddingLeft(pieces.Length);
@@ -72,9 +75,9 @@ namespace Blast.Editor
             postDrawCallback?.Invoke();
         }
 
-        private void DrawLevelMatrix(Piece[][] pieceArray)
+        private void DrawLevelMatrix(List<PieceRow> pieceArray)
         {
-            for (var i = 0; i < pieceArray.Length; i++)
+            for (var i = 0; i < pieceArray.Count; i++)
             {
                 var i1 = i;
                 DrawPiecePreviewRow(pieceArray[i], _ => GUI.color, (_, index) =>
@@ -83,7 +86,7 @@ namespace Blast.Editor
                 }, () =>
                 {
                     GUILayout.BeginHorizontal();
-                    DrawRowOperationSubButtons(pieceArray.Length, i1);
+                    DrawRowOperationSubButtons(pieceArray.Count, i1);
                 } , () =>
                 {
                     GUILayout.EndHorizontal();
@@ -114,17 +117,17 @@ namespace Blast.Editor
             GUILayout.BeginVertical();
             if (GUILayout.Button("+", GUILayout.Height(elementSize), GUILayout.Width(40)))
             {
-                Debug.Log($"SOLA ekle {index}");
+                Debug.Log($"YUKARI ekle {index}");
             }
             GUI.color = Color.red;
             if (GUILayout.Button("-", GUILayout.Height(elementSize), GUILayout.Width(40)))
             {
-                Debug.Log($"SİL {index}");
+                Debug.Log($"SATIR SİL {index}");
             }
             GUI.color = Color.green;
             if (GUILayout.Button("+", GUILayout.Height(elementSize), GUILayout.Width(40)))
             {
-                Debug.Log($"SAĞA ekle {index}");
+                Debug.Log($"AŞAĞI ekle {index}");
             }
 
             GUI.color = oldColor;
@@ -144,18 +147,27 @@ namespace Blast.Editor
                 GUI.color = Color.green;
                 if (GUILayout.Button("+", GUILayout.Width(elementSize)))
                 {
-                    Debug.Log($"SOLA ekle {i}");
+                    foreach (var pieceRow in m_levelSo._startBoard)
+                    {
+                        pieceRow.AddAtIndex(null, i);
+                    }
                 }
                 
                 GUI.color = Color.red;
                 if (GUILayout.Button("-", GUILayout.Width(elementSize)))
                 {
-                    Debug.Log($"SİL {i}");
+                    foreach (var pieceRow in m_levelSo._startBoard)
+                    {
+                        pieceRow.RemoveAtIndex(i);
+                    }
                 }
                 GUI.color = Color.green;
                 if (GUILayout.Button("+", GUILayout.Width(elementSize)))
                 {
-                    Debug.Log($"SAĞA ekle {i}");
+                    foreach (var pieceRow in m_levelSo._startBoard)
+                    {
+                        pieceRow.AddAtIndex(null, i +1);
+                    }
                 }
             }
 

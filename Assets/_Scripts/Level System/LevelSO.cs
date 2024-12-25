@@ -1,15 +1,16 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Blast
 {
     [CreateAssetMenu(fileName = "Level", order = 0)]
     public class LevelSO : ScriptableObject
     {
-        public int _gridWidth;
-        public int _gridHeight;
+        public int _gridWidth => _startBoard[0].Length;
+        public int _gridHeight => _startBoard.Count;
         public string _goal;
-        public Piece[][] _startBoard;
-
+        public List<PieceRow> _startBoard;
+        
         
         public static Piece[] GetPiecePrefabs()
         {
