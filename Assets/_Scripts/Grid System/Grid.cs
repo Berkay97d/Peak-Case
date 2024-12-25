@@ -116,6 +116,24 @@ namespace Blast
 
             return cells;
         }
+
+        public List<Cell> GetEmptyCells()
+        {
+            List<Cell> cells = new List<Cell>();
+            
+            for (int x = 0; x < m_cellArray.GetLength(0); x++)
+            {
+                for (int y = 0; y < m_cellArray.GetLength(1); y++)
+                {
+                    if (m_cellArray[x,y].GetPiece() == null)
+                    {
+                        cells.Add(m_cellArray[x,y]);
+                    }        
+                }
+            }
+
+            return cells;
+        }
         
 
         

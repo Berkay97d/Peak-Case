@@ -133,7 +133,7 @@ namespace _Scripts
             var fallPosition = new GridPosition(gridPosition.GetGrid(), gridPosition.GetX(),
                 gridPosition.GetY() - fallAmount);
             
-            _myPiece.SetCell(_myPiece.GetCell().GetGridPosition().GetGrid().GetBlastCellFromGridPosition(fallPosition), false);
+            _myPiece.SetCell(_myPiece.GetCell().GetGridPosition().GetGrid().GetBlastCellFromGridPosition(fallPosition), PieceCellChangeType.Fall);
         }
     }
 }

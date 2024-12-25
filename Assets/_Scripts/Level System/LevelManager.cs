@@ -23,7 +23,7 @@ namespace Blast
                {
                    var pieceToSpawn = _levels[0]._startBoard[m_gridCells.GetLength(1) - 1 - y][x];
                    var pieceInstance = Instantiate(pieceToSpawn);
-                   pieceInstance.SetCell(m_gridCells[x,y], true);
+                   pieceInstance.SetCell(m_gridCells[x,y], PieceCellChangeType.Init);
                }
            }
         }

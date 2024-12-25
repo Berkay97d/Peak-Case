@@ -15,6 +15,13 @@ namespace Blast
         Blue,
         Purple
     }
+
+    public enum PieceCellChangeType
+    {
+        Init,
+        Fall,
+        Fill
+    }
     
     public class OnPieceClickEventArgs
     {
@@ -48,6 +55,20 @@ namespace Blast
         
         private Cell m_myCell;
 
+
+        private void MoveAnimation(float moveTime, float jumpTime, float jumpDistance, float dropTime)
+        {
+            Sequence sequence = DOTween.Sequence();
+            
+            sequence.Append(transform.DOLocalMove(Vector3.zero, moveTime)
+                .SetEase(Ease.OutQuad)); 
+            
+            sequence.Append(transform.DOLocalMove(new Vector3(0, jumpDistance, 0), jumpTime)
+                .SetEase(Ease.OutQuad)); 
+            
+            sequence.Append(transform.DOLocalMove(Vector3.zero, dropTime)
+                .SetEase(Ease.InQuad)); 
+        }
         
         private void ChangePositionInstant(Transform parent)
         {
@@ -58,7 +79,14 @@ namespace Blast
         private void ChangePositionByFall(Transform parent)
         {
             transform.SetParent(parent.transform);
-            transform.DOLocalMove(Vector3.zero, 5f).SetSpeedBased();
+            MoveAnimation(0.35f, 0.075f, 0.1f, 0.025f);
+        }
+
+        private void ChangePositionByFill(Transform parent)
+        {
+            transform.SetParent(parent.transform);
+            transform.localPosition = new Vector3(0, 15, 0);
+            MoveAnimation(0.4f, 0.075f, 0.1f, 0.025f);
         }
         
         public void OnPointerDown(PointerEventData eventData)
@@ -78,20 +106,30 @@ namespace Blast
             
         }
         
-        public void SetCell(Cell cell, bool isInit)
+        public void SetCell(Cell cell, PieceCellChangeType cellChangeType, Action onComplete = null)
         {
+            if (m_myCell)
+            {
+                m_myCell.SetPiece(null);    
+            }
+            
             m_myCell = cell;
 
-            if (isInit)
+            if (cellChangeType == PieceCellChangeType.Init)
             {
                 ChangePositionInstant(cell.transform);    
             }
-            else
+            else if (cellChangeType == PieceCellChangeType.Fall)
             {
                 ChangePositionByFall(cell.transform);
             }
+            else if (cellChangeType == PieceCellChangeType.Fill)
+            {
+                ChangePositionByFill(cell.transform);
+            }
             
             cell.SetPiece(this);
+            onComplete?.Invoke();
             
             OnCellChange?.Invoke(cell);
         }
