@@ -31,17 +31,20 @@ namespace _Scripts
         private void Awake()
         {
             ClickablePiece.OnPieceClick += OnPieceClick;
-            //DuckPiece.OnDuckReachBottom += OnDuckReachBottom;
         }
         
         private void OnDestroy()
         {
             ClickablePiece.OnPieceClick -= OnPieceClick;
-            //DuckPiece.OnDuckReachBottom -= OnDuckReachBottom;
         }
 
         private void OnPieceClick(OnPieceClickEventArgs onPieceClickEventArgs)
         {
+            if (onPieceClickEventArgs.GetPiece() is DuckPiece && onPieceClickEventArgs.GetPiece().GetCell().GetGridPosition().GetY() != 0)
+            {
+                return;
+            }
+            
             var m_matchGrid = onPieceClickEventArgs.GetCell().GetGridPosition().GetGrid();
             var match = CheckClickMatch(onPieceClickEventArgs.GetPiece(), m_matchGrid);
 
@@ -57,18 +60,7 @@ namespace _Scripts
             }
         }
         
-        private void OnDuckReachBottom(DuckPiece duckPiece)
-        {
-            Debug.Log("SALANM");
-            StartCoroutine(InnerRoutine());
-            
-            IEnumerator InnerRoutine()
-            {
-                yield return new WaitForSeconds(0.75f);
-                LastMatchCells.Add(duckPiece.GetCell());
-                OnMatch?.Invoke(MatchType.Normal, LastMatchCells, duckPiece);    
-            }
-        }
+        
         
         private MatchType CheckClickMatch(Piece piece, Grid grid)
         {
