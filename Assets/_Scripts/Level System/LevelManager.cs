@@ -8,10 +8,9 @@ namespace Blast
     {
         [SerializeField] private Grid _grid;
         [SerializeField] private LevelSO[] _levels;
-        [SerializeField] private Piece[] _allPieces;
-        
         
         private Cell[,] m_gridCells;
+        
         
         private void Start()
         {
@@ -28,10 +27,7 @@ namespace Blast
            }
         }
 
-        private Piece GetRandomPiece()
-        {
-            return _allPieces[Random.Range(0, _allPieces.Length)];
-        }
+        
 
         
         

@@ -9,45 +9,9 @@ using UnityEngine.EventSystems;
 
 namespace Blast
 {
-    public enum PieceType
-    {
-        Yellow,
-        Red,
-        Green,
-        Blue,
-        Purple
-    }
-
-    public enum PieceCellChangeType
-    {
-        Init,
-        Fall,
-        Fill
-    }
     
-    public class OnPieceClickEventArgs
-    {
-        private Piece piece;
-        private Cell cell;
-
-        public OnPieceClickEventArgs(Piece piece, Cell cell)
-        {
-            this.piece = piece;
-            this.cell = cell;
-        }
-
-        public Piece GetPiece()
-        {
-            return piece;
-        }
-
-        public Cell GetCell()
-        {
-            return cell;
-        }
-    }
     
-    public class Piece : MonoBehaviour, IPointerDownHandler
+    public abstract class Piece : MonoBehaviour, IPointerDownHandler
     {
         [SerializeField] private PieceType _pieceType;
         
