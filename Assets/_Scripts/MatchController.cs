@@ -56,6 +56,11 @@ namespace _Scripts
 
             if (match == MatchType.Rocket)
             {
+                if (onPieceClickEventArgs.GetPiece() is DuckPiece)
+                {
+                    OnMatch?.Invoke(MatchType.Normal, LastMatchCells, onPieceClickEventArgs.GetPiece());
+                    return;
+                }
                 OnMatch?.Invoke(match, LastMatchCells, onPieceClickEventArgs.GetPiece());
             }
         }
