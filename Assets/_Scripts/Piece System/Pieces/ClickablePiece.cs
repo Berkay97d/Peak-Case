@@ -12,7 +12,6 @@ namespace _Scripts.Piece_System.Pieces
         
         public void OnPointerDown(PointerEventData eventData)
         {
-            Debug.Log($"{m_myCell.GetGridPosition().GetX()} , {m_myCell.GetGridPosition().GetY()}");
             OnPieceClick?.Invoke(new OnPieceClickEventArgs(this, m_myCell));
         }
     }

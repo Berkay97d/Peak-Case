@@ -25,7 +25,6 @@ public class FillController : MonoBehaviour
     private void OnDestroy()
     {
         MatchController.OnMatch -= OnMatch;
-        
     }
     
     private void OnMatch(MatchType matchType, List<Cell> matchCells, Piece piece)
@@ -49,20 +48,20 @@ public class FillController : MonoBehaviour
         {
             yield return new WaitForSeconds(waitTime);
             m_grid = matchCells[0].GetGridPosition().GetGrid();
-        
-            foreach (var matchCell in matchCells)
+
+            for (var i = 0; i < matchCells.Count; i++)
             {
-                var piece = GetRandomPiece();
-                m_fallPieces.Add(piece);
+                var randomPiece = GetRandomPiece();
+                m_fallPieces.Add(randomPiece);
             }
-        
+
             var emptyCells = m_grid.GetEmptyCells();
-            Debug.Log(emptyCells.Count + " !!!!!!!!!!!!!!!!!");
-        
+            
             for (var i = 0; i < emptyCells.Count; i++)
             {
                 var cell = emptyCells[i];
-                var piece = Instantiate(m_fallPieces[i], _initPosition.position, Quaternion.identity);
+                var piece = Instantiate(m_fallPieces[0], _initPosition.position, Quaternion.identity);
+                m_fallPieces.RemoveAt(0);
             
                 piece.SetCell(cell, PieceCellChangeType.Fill);
             }

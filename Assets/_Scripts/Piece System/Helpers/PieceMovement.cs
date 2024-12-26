@@ -8,6 +8,7 @@ namespace Blast
     {
         [SerializeField] private Piece _myPiece;
 
+        private Sequence sequence;
 
         private void Awake()
         {
@@ -16,7 +17,8 @@ namespace Blast
         
         private void OnDestroy()
         {
-            _myPiece.OnCellChange += OnCellChange;
+            _myPiece.OnCellChange -= OnCellChange;
+            sequence.Kill();
         }
         
         private void OnCellChange(Cell cell, PieceCellChangeType cellChangeType)
@@ -37,7 +39,7 @@ namespace Blast
         
         private void MoveAnimation(float moveTime, float jumpTime, float jumpDistance, float dropTime)
         {
-            var sequence = DOTween.Sequence();
+            sequence = DOTween.Sequence();
             
             sequence.Append(transform.DOLocalMove(Vector3.zero, moveTime)
                 .SetEase(Ease.OutQuad)); 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using _Scripts.Piece_System.Pieces;
 using Blast;
@@ -30,11 +31,13 @@ namespace _Scripts
         private void Awake()
         {
             ClickablePiece.OnPieceClick += OnPieceClick;
+            //DuckPiece.OnDuckReachBottom += OnDuckReachBottom;
         }
-
+        
         private void OnDestroy()
         {
             ClickablePiece.OnPieceClick -= OnPieceClick;
+            //DuckPiece.OnDuckReachBottom -= OnDuckReachBottom;
         }
 
         private void OnPieceClick(OnPieceClickEventArgs onPieceClickEventArgs)
@@ -42,12 +45,29 @@ namespace _Scripts
             var m_matchGrid = onPieceClickEventArgs.GetCell().GetGridPosition().GetGrid();
             var match = CheckClickMatch(onPieceClickEventArgs.GetPiece(), m_matchGrid);
 
-            if (match != MatchType.None)
+            if (match == MatchType.Normal)
             {
                 CheckBaloonMatch(m_matchGrid);
                 OnMatch?.Invoke(match, LastMatchCells, onPieceClickEventArgs.GetPiece());
             }
+
+            if (match == MatchType.Rocket)
+            {
+                OnMatch?.Invoke(match, LastMatchCells, onPieceClickEventArgs.GetPiece());
+            }
+        }
+        
+        private void OnDuckReachBottom(DuckPiece duckPiece)
+        {
+            Debug.Log("SALANM");
+            StartCoroutine(InnerRoutine());
             
+            IEnumerator InnerRoutine()
+            {
+                yield return new WaitForSeconds(0.75f);
+                LastMatchCells.Add(duckPiece.GetCell());
+                OnMatch?.Invoke(MatchType.Normal, LastMatchCells, duckPiece);    
+            }
         }
         
         private MatchType CheckClickMatch(Piece piece, Grid grid)

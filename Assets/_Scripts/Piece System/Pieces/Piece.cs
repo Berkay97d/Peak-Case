@@ -37,7 +37,7 @@ namespace Blast
                 .SetEase(Ease.OutQuad)); 
             
             sequence.Append(transform.DOMove(clickedPiece.transform.position, 0.2f)
-                .SetEase(Ease.InQuad)); // Yavaştan hızlıya
+                .SetEase(Ease.InQuad)); 
             
             sequence.OnComplete(() =>
             {

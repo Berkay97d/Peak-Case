@@ -53,12 +53,10 @@ namespace _Scripts
 
             if (!IsAnyUnfallableUnder())
             {
-                Debug.Log("ALTIMDA UF YOK");
                 DoFall(matchCountUnderMe);
                 return;
             }
             
-            Debug.Log("ALTIMDA UF VAR");
             DoFall(GetDistanceToNearestUnfallablePieceBelow());
         }
 
@@ -86,8 +84,6 @@ namespace _Scripts
 
                 if (!IsAnyUnfallableUnder())
                 {
-                    Debug.Log("ALTIMDA UF YOK");
-
                     if (_myPiece.GetCell().GetGridPosition().GetX() == clickedPiece.GetCell().GetGridPosition().GetX() &&_myPiece != clickedPiece)
                     {
                         DoFall(matchCountUnderMe -1);
@@ -97,8 +93,7 @@ namespace _Scripts
                     DoFall(matchCountUnderMe);
                     yield break;
                 }
-            
-                Debug.Log("ALTIMDA UF VAR");
+                
                 DoFall(GetDistanceToNearestUnfallablePieceBelow());
             }
         }

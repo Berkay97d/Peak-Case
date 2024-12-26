@@ -22,7 +22,6 @@ public class Border : MonoBehaviour
 
     private void OnGridInit(int width, int height)
     {
-        Debug.Log($"{width} , {height}");
         transform.position = _grid.GetGridCenter();
         
         var cellSize = _grid.GetCellSize();
