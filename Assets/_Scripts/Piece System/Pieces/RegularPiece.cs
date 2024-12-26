@@ -1,11 +1,11 @@
 ﻿using System;
-
+using _Scripts.Piece_System.Pieces;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Blast
 {
-    public class RegularPiece : Piece
+    public class RegularPiece : ClickablePiece
     {
         
         

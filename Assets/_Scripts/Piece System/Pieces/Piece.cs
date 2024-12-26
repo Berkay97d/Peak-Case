@@ -11,25 +11,17 @@ namespace Blast
 {
     
     
-    public abstract class Piece : MonoBehaviour, IPointerDownHandler
+    public abstract class Piece : MonoBehaviour
     {
         [SerializeField] private PieceType _pieceType;
         
-        public static event Action<OnPieceClickEventArgs> OnPieceClick;
+        
         public event Action<Cell, PieceCellChangeType> OnCellChange;
         public event Action OnReturnRocket; 
         
-        private Cell m_myCell;
+        protected Cell m_myCell;
 
         
-
-        
-        
-        public void OnPointerDown(PointerEventData eventData)
-        {
-            Debug.Log($"{m_myCell.GetGridPosition().GetX()} , {m_myCell.GetGridPosition().GetY()}");
-            OnPieceClick?.Invoke(new OnPieceClickEventArgs(this, m_myCell));
-        }
         
         public void DestroyInstant() 
         {

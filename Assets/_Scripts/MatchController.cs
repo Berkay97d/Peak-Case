@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Scripts.Piece_System.Pieces;
 using Blast;
 using UnityEngine;
 using Grid = Blast.Grid;
@@ -25,12 +26,12 @@ namespace _Scripts
         
         private void Awake()
         {
-            Piece.OnPieceClick += OnPieceClick;
+            ClickablePiece.OnPieceClick += OnPieceClick;
         }
 
         private void OnDestroy()
         {
-            Piece.OnPieceClick -= OnPieceClick;
+            ClickablePiece.OnPieceClick -= OnPieceClick;
         }
 
         private void OnPieceClick(OnPieceClickEventArgs onPieceClickEventArgs)
