@@ -47,6 +47,7 @@ namespace Blast.Editor
                 m_selectedPiece = piece;
             });
             
+            EditorUtility.SetDirty(m_levelSo);
         }
 
         private void DrawPiecePreviewRow(PieceRow pieces,Func<Piece, Color> colorFunc, Action<Piece, int> onClick, Action preDrawCallback = null, Action postDrawCallback = null)
