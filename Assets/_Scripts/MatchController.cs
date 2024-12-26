@@ -37,16 +37,39 @@ namespace _Scripts
         private void OnPieceClick(OnPieceClickEventArgs onPieceClickEventArgs)
         {
             var m_matchGrid = onPieceClickEventArgs.GetCell().GetGridPosition().GetGrid();
-            var match = CheckMatch(onPieceClickEventArgs.GetPiece(), m_matchGrid);
+            var match = CheckClickMatch(onPieceClickEventArgs.GetPiece(), m_matchGrid);
 
             if (match != MatchType.None)
             {
+                var baloons = m_matchGrid.GetBaloonCells();
+                var neighboorBaloonIndexes = new List<int>();
+                
+                
+                for (var i = 0; i < baloons.Count; i++)
+                {
+                    var baloon = baloons[i];
+                    var isNeighbour = baloon.HasAnyNeighbour(LastMatchCells);
+
+                    if (isNeighbour)
+                    {
+                       neighboorBaloonIndexes.Add(i);
+                    }
+                }
+
+                for (var i = 0; i < neighboorBaloonIndexes.Count; i++)
+                {
+                    var baloon = baloons[neighboorBaloonIndexes[i]];
+                    LastMatchCells.Add(baloon);
+                }
+
                 OnMatch?.Invoke(match, LastMatchCells, onPieceClickEventArgs.GetPiece());
             }
+
+            
         }
         
 
-        private MatchType CheckMatch(Piece piece, Grid grid)
+        private MatchType CheckClickMatch(Piece piece, Grid grid)
         {
             LastMatchCells.Clear();
             
@@ -94,6 +117,31 @@ namespace _Scripts
             LastMatchCells.Clear();
             return MatchType.None;
         }
+
+        /*private List<Cell> GetNeighboorMatchedBaloonCells(List<Cell> lastMatchCells, Grid grid)
+        {
+            var baloonCells = grid.GetBaloonCells();
+            HashSet<GridPosition> baloonCellNeighboors = new HashSet<GridPosition>();
+            List<Cell> neigboorMatchedBaloonCells = new List<Cell>();
+            
+            foreach (var baloonCell in baloonCells)
+            {
+                foreach (var gridPosition in baloonCell.GetNeighbourGridPositions())
+                {
+                    baloonCellNeighboors.Add(gridPosition);
+                }
+            }
+
+            foreach (var lastMatchCell in lastMatchCells)
+            {
+                if (baloonCellNeighboors.Contains(lastMatchCell.GetGridPosition()))
+                {
+                    neigboorMatchedBaloonCells.Add(grid.GetBlastCellFromGridPosition(lastMatchCell.GetGridPosition()));
+                }
+            }
+
+            return neigboorMatchedBaloonCells;
+        }*/
 
     }
 }

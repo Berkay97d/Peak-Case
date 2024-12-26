@@ -62,6 +62,21 @@ namespace Blast
             return m_gridPosition;
         }
 
+        public bool HasAnyNeighbour(List<Cell> checkArray)
+        {
+            var allNeighbours = GetNeighbourGridPositions();
+            
+            foreach (var checkElement in checkArray)
+            {
+                if (allNeighbours.Contains(checkElement.GetGridPosition()))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public List<GridPosition> GetNeighbourGridPositions()
         {
             var myGrid = m_gridPosition.GetGrid();
