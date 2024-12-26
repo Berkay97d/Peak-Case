@@ -288,6 +288,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spriteRenderer: {fileID: 7676160596443310918}
   _myPiece: {fileID: 1514343771801810303}
+  _rocketSprite: {fileID: 21300000, guid: c3c8a20e6942703418e9f270a617bdd7, type: 3}
 --- !u!114 &4289241685126356524
 MonoBehaviour:
   m_ObjectHideFlags: 0

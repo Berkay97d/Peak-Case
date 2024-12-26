@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Blast;
 using TMPro;
@@ -21,7 +22,20 @@ namespace _Scripts
             MatchController.OnMatch -= OnMatch;
         }
 
-        private void OnMatch(MatchType arg1, List<Cell> matchCells)
+        private void OnMatch(MatchType matchType, List<Cell> matchCells, Piece clickedPiece)
+        {
+            if (matchType == MatchType.Normal)
+            {
+                FallOnNormalMatch(matchCells);  
+            }
+
+            if (matchType == MatchType.Rocket)
+            {
+                FallOnRocketMatch(matchCells, clickedPiece);
+            }
+        }
+
+        private void FallOnNormalMatch(List<Cell> matchCells)
         {
             var myColumnMatchCount = GetMyColumnMatchCount(matchCells);
             
@@ -46,6 +60,47 @@ namespace _Scripts
             
             Debug.Log("ALTIMDA UF VAR");
             DoFall(GetDistanceToNearestUnfallablePieceBelow());
+        }
+
+        private void FallOnRocketMatch(List<Cell> matchCells, Piece clickedPiece)
+        {
+            StartCoroutine(InnerRoutine());
+            
+            IEnumerator InnerRoutine()
+            {
+                yield return new WaitForSeconds(0.4f);
+                
+                var myColumnMatchCount = GetMyColumnMatchCount(matchCells);
+            
+                if (myColumnMatchCount == 0)
+                {
+                    yield break;
+                }
+
+                var matchCountUnderMe = GetMatchCountUnderMe(matchCells);
+
+                if (matchCountUnderMe == 0)
+                {
+                    yield break;
+                }
+
+                if (!IsAnyUnfallableUnder())
+                {
+                    Debug.Log("ALTIMDA UF YOK");
+
+                    if (_myPiece.GetCell().GetGridPosition().GetX() == clickedPiece.GetCell().GetGridPosition().GetX() &&_myPiece != clickedPiece)
+                    {
+                        DoFall(matchCountUnderMe -1);
+                        yield break;
+                    }
+                    
+                    DoFall(matchCountUnderMe);
+                    yield break;
+                }
+            
+                Debug.Log("ALTIMDA UF VAR");
+                DoFall(GetDistanceToNearestUnfallablePieceBelow());
+            }
         }
 
         private int GetMyColumnMatchCount(List<Cell> matchCells)

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using _Scripts;
 using DG.Tweening;
 using JetBrains.Annotations;
 using TMPro;
@@ -50,15 +52,16 @@ namespace Blast
         [SerializeField] private PieceType _pieceType;
         
         public static event Action<OnPieceClickEventArgs> OnPieceClick;
-        public event Action OnPieceDestroy;
         public event Action<Cell> OnCellChange;
+        public event Action OnReturnRocket; 
         
         private Cell m_myCell;
 
+        
 
         private void MoveAnimation(float moveTime, float jumpTime, float jumpDistance, float dropTime)
         {
-            Sequence sequence = DOTween.Sequence();
+            var sequence = DOTween.Sequence();
             
             sequence.Append(transform.DOLocalMove(Vector3.zero, moveTime)
                 .SetEase(Ease.OutQuad)); 
@@ -98,12 +101,24 @@ namespace Blast
         public void DestroyInstant() 
         {
             Destroy(gameObject);
-            //OnPieceDestroy?.Invoke();
         }
 
-        public void DestroyTowardsTarget(Vector3 target)
+        public void MoveTowardsClickedPiece(Piece clickedPiece, Action onComplete = null)
         {
+            var sequence = DOTween.Sequence();
             
+            var reversePosition = transform.position + (transform.position - clickedPiece.transform.position).normalized * 0.5f;
+            sequence.Append(transform.DOMove(reversePosition, 0.15f)
+                .SetEase(Ease.OutQuad)); 
+            
+            sequence.Append(transform.DOMove(clickedPiece.transform.position, 0.2f)
+                .SetEase(Ease.InQuad)); // Yavaştan hızlıya
+            
+            sequence.OnComplete(() =>
+            {
+                OnReturnRocket?.Invoke();
+                onComplete?.Invoke();
+            });
         }
         
         public void SetCell(Cell cell, PieceCellChangeType cellChangeType, Action onComplete = null)

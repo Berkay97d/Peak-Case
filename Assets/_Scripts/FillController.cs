@@ -28,7 +28,7 @@ public class FillController : MonoBehaviour
         
     }
     
-    private void OnMatch(MatchType arg1, List<Cell> matchCells)
+    private void OnMatch(MatchType arg1, List<Cell> matchCells, Piece piece)
     {
         StartCoroutine(InnerRoutine());
         

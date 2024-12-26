@@ -18,7 +18,7 @@ namespace _Scripts
         [SerializeField] private int _minimumMatchCount;
         [SerializeField] private int _minimumRocketMatchCount;
 
-        public static event Action<MatchType, List<Cell>> OnMatch; 
+        public static event Action<MatchType, List<Cell>, Piece> OnMatch; 
         
         private List<Cell> LastMatchCells = new List<Cell>();
         
@@ -40,7 +40,7 @@ namespace _Scripts
 
             if (match != MatchType.None)
             {
-                OnMatch?.Invoke(match, LastMatchCells);
+                OnMatch?.Invoke(match, LastMatchCells, onPieceClickEventArgs.GetPiece());
             }
         }
         

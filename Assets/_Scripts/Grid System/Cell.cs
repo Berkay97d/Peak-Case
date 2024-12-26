@@ -21,12 +21,24 @@ namespace Blast
             MatchController.OnMatch -= OnMatch;
         }
         
-        private void OnMatch(MatchType matchType, List<Cell> matchedCells)
+        private void OnMatch(MatchType matchType, List<Cell> matchedCells, Piece clickedPiece)
         {
-            if (matchedCells.Contains(this))
+            if (matchType == MatchType.Normal && matchedCells.Contains(this))
             {
                 m_myPiece.DestroyInstant();
                 m_myPiece = null;
+            }
+
+            if (matchType == MatchType.Rocket && matchedCells.Contains(this))
+            {
+                if (m_myPiece != clickedPiece)
+                {
+                    m_myPiece.MoveTowardsClickedPiece(clickedPiece, m_myPiece.DestroyInstant);    
+                }
+                else
+                {
+                    m_myPiece.MoveTowardsClickedPiece(clickedPiece);
+                }
             }
         }
 
