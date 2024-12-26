@@ -7,7 +7,8 @@ namespace Blast
     {
         [SerializeField] private SpriteRenderer _spriteRenderer;
         [SerializeField] private Piece _myPiece;
-        [SerializeField] private Sprite _rocketSprite;
+        [SerializeField] private Sprite _horizontalRocketSprite;
+        [SerializeField] private Sprite _verticalRocketSprite;
         
 
 
@@ -17,9 +18,15 @@ namespace Blast
             _myPiece.OnReturnRocket += OnReturnRocket;
         }
 
-        private void OnReturnRocket()
+        private void OnReturnRocket(bool isHorizontal)
         {
-            _spriteRenderer.sprite = _rocketSprite;
+            if (isHorizontal)
+            {
+                _spriteRenderer.sprite = _horizontalRocketSprite;
+                return;
+            }
+            
+            _spriteRenderer.sprite = _verticalRocketSprite;
         }
 
         private void OnDestroy()

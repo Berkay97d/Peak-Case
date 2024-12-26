@@ -6,6 +6,7 @@ using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Random = UnityEngine.Random;
 
 namespace Blast
 {
@@ -17,7 +18,7 @@ namespace Blast
         
         
         public event Action<Cell, PieceCellChangeType> OnCellChange;
-        public event Action OnReturnRocket; 
+        public event Action<bool> OnReturnRocket; 
         
         protected Cell m_myCell;
 
@@ -41,7 +42,18 @@ namespace Blast
             
             sequence.OnComplete(() =>
             {
-                OnReturnRocket?.Invoke();
+                var random = Random.Range(0, 2);
+
+                if (random == 0)
+                {
+                    OnReturnRocket?.Invoke(true);    
+                }
+                else
+                {
+                    OnReturnRocket?.Invoke(false);
+                }
+                
+                
                 onComplete?.Invoke();
             });
         }

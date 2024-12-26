@@ -7,9 +7,13 @@ namespace Blast.Pieces
 {
     public class RocketPiece : ClickablePiece
     {
-        
-        
-        
-        
+        private bool isHorizontal;
+
+
+        public void SetIsHorizontal(bool isH)
+        {
+            isHorizontal = isH;
+        }
+
     }
 }

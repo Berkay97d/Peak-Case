@@ -71,6 +71,14 @@ PrefabInstance:
       propertyPath: _myPiece
       value: 
       objectReference: {fileID: 3637415143169800205}
+    - target: {fileID: 8772432789685636095, guid: 5c5b485f7a70fe54080442e3d7331a21, type: 3}
+      propertyPath: _verticalRocketSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 2a62262aab8d6d34f911a9c6c9b0ce5d, type: 3}
+    - target: {fileID: 8772432789685636095, guid: 5c5b485f7a70fe54080442e3d7331a21, type: 3}
+      propertyPath: _horizontalRocketSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c3c8a20e6942703418e9f270a617bdd7, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5c5b485f7a70fe54080442e3d7331a21, type: 3}
 --- !u!1 &8187086246476342765 stripped
@@ -91,3 +99,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pieceType: 2
+  vertical: {fileID: 2306856552921605960, guid: f2dc6b883a9fd2e48bb4d726ef8f412f, type: 3}
+  horizontal: {fileID: 6993586566732729108, guid: d34854f64ef8e9a49b4917e2460f4904, type: 3}
