@@ -19,9 +19,12 @@ namespace _Scripts
         [SerializeField] private int _minimumMatchCount;
         [SerializeField] private int _minimumRocketMatchCount;
 
+        
         public static event Action<MatchType, List<Cell>, Piece> OnMatch; 
         
+        
         private List<Cell> LastMatchCells = new List<Cell>();
+        
         
         
         private void Awake()
@@ -41,34 +44,12 @@ namespace _Scripts
 
             if (match != MatchType.None)
             {
-                var baloons = m_matchGrid.GetBaloonCells();
-                var neighboorBaloonIndexes = new List<int>();
-                
-                
-                for (var i = 0; i < baloons.Count; i++)
-                {
-                    var baloon = baloons[i];
-                    var isNeighbour = baloon.HasAnyNeighbour(LastMatchCells);
-
-                    if (isNeighbour)
-                    {
-                       neighboorBaloonIndexes.Add(i);
-                    }
-                }
-
-                for (var i = 0; i < neighboorBaloonIndexes.Count; i++)
-                {
-                    var baloon = baloons[neighboorBaloonIndexes[i]];
-                    LastMatchCells.Add(baloon);
-                }
-
+                CheckBaloonMatch(m_matchGrid);
                 OnMatch?.Invoke(match, LastMatchCells, onPieceClickEventArgs.GetPiece());
             }
-
             
         }
         
-
         private MatchType CheckClickMatch(Piece piece, Grid grid)
         {
             LastMatchCells.Clear();
@@ -118,30 +99,28 @@ namespace _Scripts
             return MatchType.None;
         }
 
-        /*private List<Cell> GetNeighboorMatchedBaloonCells(List<Cell> lastMatchCells, Grid grid)
+        private void CheckBaloonMatch(Grid grid)
         {
-            var baloonCells = grid.GetBaloonCells();
-            HashSet<GridPosition> baloonCellNeighboors = new HashSet<GridPosition>();
-            List<Cell> neigboorMatchedBaloonCells = new List<Cell>();
-            
-            foreach (var baloonCell in baloonCells)
+            var baloons = grid.GetBaloonCells();
+            var neighboorBaloonIndexes = new List<int>();
+                
+            for (var i = 0; i < baloons.Count; i++)
             {
-                foreach (var gridPosition in baloonCell.GetNeighbourGridPositions())
+                var baloon = baloons[i];
+                var isNeighbour = baloon.HasAnyNeighbour(LastMatchCells);
+
+                if (isNeighbour)
                 {
-                    baloonCellNeighboors.Add(gridPosition);
+                    neighboorBaloonIndexes.Add(i);
                 }
             }
 
-            foreach (var lastMatchCell in lastMatchCells)
+            for (var i = 0; i < neighboorBaloonIndexes.Count; i++)
             {
-                if (baloonCellNeighboors.Contains(lastMatchCell.GetGridPosition()))
-                {
-                    neigboorMatchedBaloonCells.Add(grid.GetBlastCellFromGridPosition(lastMatchCell.GetGridPosition()));
-                }
+                var baloon = baloons[neighboorBaloonIndexes[i]];
+                LastMatchCells.Add(baloon);
             }
-
-            return neigboorMatchedBaloonCells;
-        }*/
+        }
 
     }
 }
