@@ -59,9 +59,13 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 2881daec490edc9428e445d512481fac, type: 3}
+    - target: {fileID: 6642952327444462831, guid: 5c5b485f7a70fe54080442e3d7331a21, type: 3}
+      propertyPath: _myPiece
+      value: 
+      objectReference: {fileID: 8221668833471197411}
     - target: {fileID: 6946792679878762342, guid: 5c5b485f7a70fe54080442e3d7331a21, type: 3}
       propertyPath: m_Name
-      value: 'Blue Piece '
+      value: 3Blue Piece  Variant
       objectReference: {fileID: 0}
     - target: {fileID: 8772432789685636095, guid: 5c5b485f7a70fe54080442e3d7331a21, type: 3}
       propertyPath: _myPiece

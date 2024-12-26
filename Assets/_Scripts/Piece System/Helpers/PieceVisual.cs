@@ -28,7 +28,7 @@ namespace Blast
             _myPiece.OnReturnRocket -= OnReturnRocket;
         }
 
-        private void OnCellChange(Cell cell)
+        private void OnCellChange(Cell cell, PieceCellChangeType pieceCellChangeType)
         {
             _spriteRenderer.sortingOrder = cell.GetGridPosition().GetY() + 1;
         }
