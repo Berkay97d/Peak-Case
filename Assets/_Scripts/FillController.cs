@@ -28,13 +28,26 @@ public class FillController : MonoBehaviour
         
     }
     
-    private void OnMatch(MatchType arg1, List<Cell> matchCells, Piece piece)
+    private void OnMatch(MatchType matchType, List<Cell> matchCells, Piece piece)
+    {
+        if (matchType == MatchType.Normal)
+        {
+            FillOnNormalMatch(matchCells, 0.1f);
+        }
+
+        if (matchType == MatchType.Rocket)
+        {
+            FillOnNormalMatch(matchCells, 0.5f);
+        }
+    }
+
+    private void FillOnNormalMatch(List<Cell> matchCells, float waitTime)
     {
         StartCoroutine(InnerRoutine());
         
         IEnumerator InnerRoutine()
         {
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(waitTime);
             m_grid = matchCells[0].GetGridPosition().GetGrid();
         
             foreach (var matchCell in matchCells)
